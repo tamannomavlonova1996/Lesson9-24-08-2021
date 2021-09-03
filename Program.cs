@@ -7,64 +7,85 @@ namespace Lesson9
         static void Main(string[] args)
         {
             {
-                Converter converter = new Converter(10, 10, 10);
-                converter.ConvertToSomoni(true, false, false);
-                converter.ConvertFromSomoni(true, false, false);
+                Console.WriteLine("Теперь запишите сумму:");
+                int SUM = int.Parse(Console.ReadLine());
+                Converter ExchangeRates=new Converter(10.2183,11.0174,0.1316);
+                Console.WriteLine($"\t\tКурс валют на сегодня: \n\t\t1 USD = {10.2183} TJS\n\t\t1 EUR = {11.0174} TJS \n\t\t1 RUB = {0.1316} TJS");
+                Console.WriteLine("\nПожалуйста, выберите тип конвертации:");
+                Console.WriteLine("Для конвертация сомони в доллар нажмите - 1");
+                Console.WriteLine("Для конвертация сомони в евро нажмите - 2");
+                Console.WriteLine("Для конвертация сомони в рубл нажмите - 3");
+                Console.WriteLine("Для конвертация доллар в сомони нажмите - 4");
+                Console.WriteLine("Для конвертация евро в сомони нажмите - 5");
+                Console.WriteLine("Для конвертация рубл в сомони нажмите - 6");
+                int Choice = int.Parse(Console.ReadLine());
+                switch(Choice)
+                {
+                    case 1:
+                        Console.WriteLine($"{SUM} сомони = {ExchangeRates.SomToUsd(SUM)} доллар");
+                        break;
+                    case 2:
+                        Console.WriteLine($"{SUM} сомони = {ExchangeRates.SomToEur(SUM)} евро");
+                        break;
+                    case 3:
+                        Console.WriteLine($"{SUM} сомони = {ExchangeRates.SomToRub(SUM)} рубл");
+                        break;
+                    case 4:
+                        Console.WriteLine($"{SUM} доллар = {ExchangeRates.UsdToSom(SUM)} сомони");
+                        break;
+                    case 5:
+                        Console.WriteLine($"{SUM} евро ={ExchangeRates.EurToSom(SUM)} сомони");
+                        break;
+                    case 6:
+                        Console.WriteLine($"{SUM} рубл = {ExchangeRates.RubToSom(SUM)} сомони");
+                        break;
+                    default:
+                        Console.WriteLine("Неправильная команда. Пожалуйста, попробуйте еще раз");
+                        break;
+                }
+                Console.ReadKey();
                 Employee employee = new Employee("Tom", "Jerry", "manager", 1);
                 employee.CalculateSalary();
             }
         }
     }
 
-    public class Converter
-    {
-        private double _usd;
-        private double _eur;
-        private double _rub;
-
-        public Converter(double usd, double eur, double rub)
+     public class Converter 
         {
-            _usd = usd;
-            _eur = eur;
-            _rub = rub;
-        }
-
-        public void ConvertToSomoni(bool usd, bool eur, bool rub)
-        {
-            if (usd)
+            private double USD{ get; set;}
+            private double EUR {get; set;}
+            private double RUB {get; set;}
+            public Converter(double usd, double eur, double rub)
             {
-                Console.WriteLine(Math.Round((_usd * 11.33), 2));
+                this.USD = usd;
+                this.EUR = eur;
+                this.RUB=rub;
             }
-
-            if (eur)
+            public double SomToUsd(double som)
             {
-                Console.WriteLine(Math.Round((_eur * 13.95), 2));
+                return Math.Round(som/USD,4);
             }
-
-            if (rub)
+            public double SomToEur(double som)
             {
-                Console.WriteLine(_rub * 0.1535);
+                return Math.Round(som/EUR,4);
             }
-        }
-
-        public void ConvertFromSomoni(bool usd, bool eur, bool rub)
-        {
-            if (usd)
+            public double SomToRub(double som)
             {
-                Console.WriteLine(Math.Round((_usd / 11.33), 2));
+                return Math.Round(som/RUB,4);
             }
-
-            if (eur)
+            public double UsdToSom(double usd)
             {
-                Console.WriteLine(Math.Round((_eur / 13.95), 2));
+                return Math.Round(usd*USD,4);
             }
-
-            if (rub)
+            public double EurToSom(double eur)
             {
-                Console.WriteLine(Math.Round((_rub / 0.1535), 2));
+                return Math.Round(eur*EUR,4);
+            }
+            public double RubToSom(double rub)
+            {
+                return Math.Round(rub*RUB,4);
             }
         }
-    }
 
     //2 task
     public class Employee
